@@ -27,25 +27,12 @@ syntax on
 " The mapleader has to be set before vundle starts loading all
 " the plugins.
 let mapleader = "\<Space>"
-nmap <Leader>rxm :ExtractMethod<Enter>
-
-" Copy the relative path of the current file to the clipboard
-nmap <Leader>cf :silent !echo -n % \| pbcopy<Enter>
 
 " ================ Turn Off Swap Files ==============
 
 set noswapfile
 set nobackup
 set nowb
-
-" ================ Persistent Undo ==================
-" Keep undo history across sessions, by storing in file.
-" Only works all the time.
-if has('persistent_undo')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
-endif
 
 " ================ Indentation ======================
 
@@ -91,10 +78,6 @@ Plug 'mileszs/ack.vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
-
-" Tmux
-Plug 'tmux-plugins/vim-tmux'
-Plug 'christoomey/vim-tmux-navigator'
 
 " Visuals
 Plug 'altercation/vim-colors-solarized'
@@ -151,27 +134,10 @@ let g:solarized_termtrans = 1
 set background=light
 colorscheme solarized
 
-if has("gui_running")
-"tell the term has 256 colors
-  set t_Co=256
-end
-
-source ~/.dotfiles/vim/splits.vim
-source ~/.dotfiles/vim/tabs.vim
-source ~/.dotfiles/vim/font.vim
-source ~/.dotfiles/vim/ruby.vim
-source ~/.dotfiles/vim/javascript.vim
 
 " Better search
 set hlsearch
 set incsearch
-
-
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --no-heading
-  set grepformat=%f:%l:%m
-endif
-
 
 nnoremap <Leader>a :Ack!<Space>
 
@@ -185,63 +151,16 @@ set linebreak    "Wrap lines at convenient points
 nmap j gj
 nmap k gk
 
-autocmd BufReadPre,FileReadPre *.md :set wrap
-
-" Enable filetype plugins for vim-textobj-rubyblock
-if has("autocmd")
-  filetype indent plugin on
-endif
-
 autocmd FocusLost * silent! wa " Automatically save file
 
 set scrolloff=5 " Keep 5 lines below and above the cursor
 
 set cursorline
 
-function! GetBranchName(_) abort
-  let b:branch_name = systemlist("git rev-parse --abbrev-ref HEAD 2> /dev/null || echo ''")[0]
-endfunction
-call timer_start(1000, function('GetBranchName'), {'repeat': -1})
-
-autocmd BufEnter,BufWritePost * call GetBranchName("")
-
-set laststatus=2
-set statusline=%f " tail of the filename
-set statusline+=\ c:%c " column number
-set statusline+=%= " switching to right side
-set statusline+=%(%{b:branch_name}%)
-
-
-
-command FormatJSON %!python -m json.tool
-
-autocmd VimResized * wincmd = " Automatically resize splits when resizing window
-
-"lazy js. Append ; at the end of the line
-nnoremap <Leader>; m`A;<Esc>``
 
 nnoremap H ^
 nnoremap L $
-
-if has("gui_running")
-  set fullscreen
-end
-
 nnoremap ; :
-
-" Set vertical bar as cursor in insert mode
-if exists('$TMUX')
-  let &t_SI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=1\x7\<esc>\\"
-  let &t_EI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=0\x7\<esc>\\"
-else
-  let &t_SI = "\<esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<esc>]50;CursorShape=0\x7"
-endif
-
-
 nmap <Leader>s :write<Enter>
 nmap <Leader>r :redraw!<Enter>
 
-let g:VM_maps = {}
-let g:VM_maps['Find Under']         = 'zz'           " replace C-n
-let g:VM_maps['Find Subword Under'] = 'zz'
