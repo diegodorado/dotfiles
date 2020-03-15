@@ -2,9 +2,12 @@ set -e
 
 echo -n "Symlinking dotfiles..."
 #Symlink .zshrc and .vimrc
+rm -f $HOME/.vimrc
 ln -s $HOME/.dotfiles/.vimrc $HOME/.vimrc
-#ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
-#ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
+rm -f $HOME/.zshrc
+ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
+rm -f $HOME/.gitconfig
+ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
 
 # Install Plug
 #curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
