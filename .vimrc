@@ -12,6 +12,7 @@ set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
+set t_vb=                       "turn off flashing
 set autoread                    "Reload files changed outside vim
 
 " This makes vim act like all other editors, buffers can
@@ -53,6 +54,8 @@ call plug#begin('~/.vim/plugged')
   " Visuals
   Plug 'netsgnut/arctheme.vim'
   Plug 'vim-airline/vim-airline'
+  Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 " Display all matching files when we tab complete
@@ -60,8 +63,32 @@ set wildmenu
 "set exrc
 "set paste
 
+"https://github.com/vim-airline/vim-airline/wiki/FAQ#there-is-a-pause-when-leaving-insert-mode
+set ttimeoutlen=10
+
 syntax enable
 colorscheme iceberg
+
+let s:transparentBg = 0
+function! ToggleTransparentMode()
+  "AirlineToggle
+  colorscheme iceberg
+  if s:transparentBg
+    let s:transparentBg = 0
+    set laststatus=2
+    set ruler
+  else
+    set laststatus=0
+    set noruler
+    " let vim have transparent background color
+    highlight Normal guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=NONE 
+    highlight LineNr guibg=NONE ctermbg=NONE 
+    highlight StatusLine guibg=NONE ctermbg=NONE 
+    let s:transparentBg = 1
+  endif
+endfunction
+nnoremap <leader>t :call ToggleTransparentMode()<CR>
 
 " Better search
 set hlsearch
@@ -84,7 +111,6 @@ let NERDTreeDirArrows = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 "ctrlp setup
-"let g:ctrlp_use_caching=0
 let g:ctrlp_prompt_mappings = {
 \ 'PrtClearCache()': ['<c-r>'],
 \}
