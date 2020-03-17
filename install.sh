@@ -3,17 +3,28 @@ set -e
 echo -n "Symlinking dotfiles..."
 #Symlink .zshrc and .vimrc
 rm -f $HOME/.vimrc
-ln -s $HOME/.dotfiles/.vimrc $HOME/.vimrc
+ln -s $HOME/.dotfiles/vim/rc $HOME/.vimrc
 rm -f $HOME/.zshrc
-ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
+ln -s $HOME/.dotfiles/zsh/rc $HOME/.zshrc
 rm -f $HOME/.gitconfig
-ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
+ln -s $HOME/.dotfiles/git/config $HOME/.gitconfig
+rm -f $HOME/.config/i3/config
+ln -s $HOME/.dotfiles/i3/config $HOME/.config/i3/config
+rm -f $HOME/.config/i3/status.toml
+ln -s $HOME/.dotfiles/i3/status.toml $HOME/.config/i3/status.toml
+rm -f $HOME/.XCompose
+ln -s $HOME/.dotfiles/X/XCompose $HOME/.XCompose
+rm -f $HOME/.Xmodmap
+ln -s $HOME/.dotfiles/X/Xmodmap $HOME/.Xmodmap
+rm -f $HOME/.moc/config
+ln -s $HOME/.dotfiles/moc/config $HOME/.moc/config
+rm -f $HOME/.moc/keymap
+ln -s $HOME/.dotfiles/moc/keymap $HOME/.moc/keymap
+rm -f $HOME/.config/termite/config
+ln -s $HOME/.dotfiles/termite/config $HOME/.config/termite/config
 
 # Install Plug
 #curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #vim +PlugInstall +q
-
-#git clone git://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/zsh-syntax-highlighting
-#git clone git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/zsh-autosuggestions
 
 echo "Done installing! "

@@ -1,0 +1,16 @@
+Theme			= transparent-background
+Keymap			= keymap
+SoundDriver = JACK:ALSA
+MusicDir = "/home/diegodorado/Music"
+# use transh-put from trash-cli instead of rm
+ExecCommand1 = "trash-put %f"
+#ExecCommand2 =
+#ExecCommand3 =
+#ExecCommand4 =
+#ExecCommand5 =
+#ExecCommand6 =
+#ExecCommand7 =
+#ExecCommand8 =
+#ExecCommand9 =
+#ExecCommand10 =
+

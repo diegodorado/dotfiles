@@ -1,0 +1,25 @@
+menu_down               = j DOWN
+menu_up                 = k UP
+seek_forward =  l RIGHT
+seek_backward =  h LEFT
+help                    = ?
+show_lyrics =
+toggle_layout           = L
+clear_playlist        = D
+plist_move_up         = K
+plist_move_down       = J
+toggle_make_mono      =
+equalizer_prev        =
+equalizer_next        =
+
+exec_command1         = M-d
+exec_command2         =
+exec_command3         =
+exec_command4         =
+exec_command5         =
+exec_command6         =
+exec_command7         =
+exec_command8         =
+exec_command9         =
+exec_command10        =
+
