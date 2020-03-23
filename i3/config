@@ -32,13 +32,15 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # lock
 bindsym $mod+Shift+x exec i3lock --color 000000
 
-# toggle compton
-bindsym $mod+Shift+t exec "if [ $(pgrep -x 'picom') ]; then killall picom; else picom -b;fi"
-
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+# set a background image
+exec --no-startup-id feh --bg-fill ~/Pictures/diego-alta-final.jpg
+
+# auto configure displays
+exec --no-startup-id autorandr --change
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -115,9 +117,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -159,8 +158,6 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -252,9 +249,56 @@ mode "$mode_display" {
 }
 bindsym $mod+shift+m mode "$mode_display"
 
+#exec --no-startup-id sleep 2 && xmodmap ~/.Xmodmap
 
-exec --no-startup-id xmodmap ~/.Xmodmap
-# right alt as compose key
-exec --no-startup-id setxkbmap -option compose:ralt
+bindsym $mod+Shift+f exec termite -e ranger
+
+# terminal scripts
+set $mode_terminal_scripts jack_transport_play jack_transport_stop toggle_compton
+mode "$mode_terminal_scripts" {
+    bindsym 3 exec "if [ $(pgrep -x 'picom') ]; then killall picom; else picom -b;fi"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+t mode "$mode_terminal_scripts"
 
 
+# terminal apps
+set $mode_terminal_apps mocp(1) jack_capture(2) ranger(3) vim(4)
+mode "$mode_terminal_apps" {
+    bindsym 1 exec termite -e mocp, mode "default"
+    bindsym 2 exec termite -e "echo 'stop' | jack_transport && jack_capture -jt", mode "default"
+    bindsym 3 exec termite -e "ranger ~", mode "default"
+    bindsym 4 exec termite -e vim, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+shift+t mode "$mode_terminal_apps"
+
+# jack stuff
+set $JACK $HOME/.config/i3/jack/jack.sh
+set $mode_jack start(1) exit(2) play(3) stop(4) arm(5) unarm(6)
+mode "$mode_jack" {
+    bindsym 1 exec --no-startup-id "$JACK start", mode "default"
+    bindsym 2 exec --no-startup-id "$JACK exit", mode "default"
+    bindsym 3 exec --no-startup-id "$JACK play", mode "default"
+    bindsym 4 exec --no-startup-id "$JACK stop", mode "default"
+    bindsym 5 exec --no-startup-id "$JACK arm", mode "default"
+    bindsym 6 exec --no-startup-id "$JACK unarm", mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+shift+p mode "$mode_jack"
+bindsym $mod+shift+bracketleft  exec --no-startup-id "$JACK toggle", mode "default"
+bindsym $mod+shift+bracketright  exec --no-startup-id "$JACK toggle_arm", mode "default"
+bindsym $mod+shift+bar  exec --no-startup-id "$JACK toggle_play", mode "default"
+
+
+#take an area screenshot to the clipboard
+bindsym $mod+shift+s exec "maim -s | xclip -selection clipboard -t image/png"
+bindsym $mod+shift+ctrl+s exec "maim -s ~/Pictures/screenshots/$(date +%s).png"
+# capslock as esc and right alt as compose key
+exec_always "setxkbmap -option compose:ralt -option caps:escape"

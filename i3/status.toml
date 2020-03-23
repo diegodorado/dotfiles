@@ -5,6 +5,12 @@ theme = "solarized-dark"
 name = "awesome"
 [icons.overrides]
 
+
+[[block]]
+block = "custom"
+command = "$HOME/.config/i3/jack/status.py"
+interval = 1
+
 [[block]]
 block = "disk_space"
 path = "/"
@@ -31,15 +37,9 @@ interval = 1
 format = "{1m}"
 
 [[block]]
-block = "net"
-device = "wlp5s0"
-#ssid = true
-signal_strength = true
-ip = true
-speed_up = false
-speed_down = false
-interval = 5
-use_bits = false
+block = "custom"
+command = '''echo  $(ip route | grep '^[0-9]' | sed -E 's/.*src\s([0-9\.]*).*/\1/' ) : $(curl ipinfo.io/ip)''' 
+interval = 120
 
 [[block]]
 block = "battery"
@@ -55,3 +55,6 @@ block = "time"
 interval = 60
 format = "%d/%m %R"
 
+[[block]]
+block = "bluetooth"
+mac = "60:C5:47:14:80:05"

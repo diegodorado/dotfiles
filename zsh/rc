@@ -19,8 +19,8 @@ zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 HISTFILE=~/.zhistory
-HISTSIZE=1000
-SAVEHIST=500
+HISTSIZE=2000
+SAVEHIST=2000
 export EDITOR=vim
 export VISUAL=vim
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
@@ -143,7 +143,7 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
 esac
 
 
-export PATH=/home/diegodorado/.gem/ruby/2.7.0/bin:$PATH
+export PATH=~/.ghcup/bin:~/.gem/ruby/2.7.0/bin:$PATH
 
 # Commands to be executed before the prompt is displayed
 # Save current working dir
