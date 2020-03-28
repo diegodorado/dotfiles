@@ -20,18 +20,80 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 HISTFILE=~/.zhistory
 HISTSIZE=2000
+HISTFILESIZE=10000
+HISTCONTROL=ignorespace:erasedups
+HISTIGNORE="ls:ps:history"
 SAVEHIST=2000
 export EDITOR=vim
 export VISUAL=vim
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
 
+## Plugins section
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_prompt_string) $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+# set terminal title
+autoload -Uz add-zsh-hook
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%n@%m %~\a'
+}
+function xterm_title_preexec () {
+	print -Pn -- '\e]2;%n@%m %~ %# ' && print -n -- "${(q)1}\a"
+}
+add-zsh-hook -Uz precmd xterm_title_precmd
+add-zsh-hook -Uz preexec xterm_title_preexec
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+
+
 ## Keybindings section
-bindkey -e
-bindkey '^[[C'  forward-char                                    # Right key
-bindkey '^[[D'  backward-char                                   # Left key
-bindkey '^[[5~' history-beginning-search-backward               # Page up key
-bindkey '^[[6~' history-beginning-search-forward                # Page down key
+bindkey -v # Vi keybinding
+typeset -g -A key
+
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+key[Insert]="${terminfo[kich1]}"
+key[Backspace]="${terminfo[kbs]}"
+key[Delete]="${terminfo[kdch1]}"
+key[Up]="${terminfo[kcuu1]}"
+key[Down]="${terminfo[kcud1]}"
+key[Left]="${terminfo[kcub1]}"
+key[Right]="${terminfo[kcuf1]}"
+key[PageUp]="${terminfo[kpp]}"
+key[PageDown]="${terminfo[knp]}"
+key[Shift-Tab]="${terminfo[kcbt]}"
+
+[[ -n "${key[Delete]}"    ]] && bindkey -- "${key[Delete]}"    delete-char
+[[ -n "${key[Left]}"      ]] && bindkey -- "${key[Left]}"      backward-char
+[[ -n "${key[Right]}"     ]] && bindkey -- "${key[Right]}"     forward-char
+[[ -n "${key[Shift-Tab]}" ]] && bindkey -- "${key[Shift-Tab]}" reverse-menu-complete
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
+
+
+# Keep some defaults
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+bindkey '^r' history-incremental-search-backward
+
+# Better searching in command mode
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search-forward
+bindkey -M vicmd "k" history-substring-search-up
+bindkey -M vicmd "j" history-substring-search-down
+
 
 ## Alias section 
 alias cp="cp -i"                                                # Confirm before overwriting something
@@ -48,8 +110,6 @@ colors
 setopt prompt_subst
 # Maia prompt
 PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
-# Print a greeting message when shell is started
-echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"                              # plus/minus     - clean repo
 GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
@@ -115,17 +175,6 @@ export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
 
 
-## Plugins section: Enable fish style features
-# Use syntax highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# Use history substring search
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-# bind UP and DOWN arrow keys to history substring search
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-bindkey '^[[A' history-substring-search-up			
-bindkey '^[[B' history-substring-search-down
 
 # Apply different settigns for different terminals
 case $(basename "$(cat "/proc/$PPID/comm")") in
@@ -143,7 +192,7 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
 esac
 
 
-export PATH=~/.ghcup/bin:~/.gem/ruby/2.7.0/bin:$PATH
+export PATH=~/.yarn/bin:~/.ghcup/bin:~/.gem/ruby/2.7.0/bin:$PATH
 
 # Commands to be executed before the prompt is displayed
 # Save current working dir
@@ -153,9 +202,5 @@ export PROMPT_COMMAND='pwd > "${HOME}/.cwd"'
 #zsh equivalent
 precmd() { eval "$PROMPT_COMMAND" }
 
-bindkey -v # Vi keybinding
-# Keep some defaults
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-bindkey '^r' history-incremental-search-backward
+
 export KEYTIMEOUT=1

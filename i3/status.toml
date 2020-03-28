@@ -7,9 +7,7 @@ name = "awesome"
 
 
 [[block]]
-block = "custom"
-command = "$HOME/.config/i3/jack/status.py"
-interval = 1
+block = "jack"
 
 [[block]]
 block = "disk_space"
@@ -46,9 +44,6 @@ block = "battery"
 interval = 10
 format = "{percentage}%"
 driver = "upower"
-
-[[block]]
-block = "sound"
 
 [[block]]
 block = "time"

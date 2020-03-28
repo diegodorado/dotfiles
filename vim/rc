@@ -56,12 +56,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-airline/vim-airline'
   Plug 'tpope/vim-fugitive'
 
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'andys8/vim-elm-syntax'
 call plug#end()
 
 " Display all matching files when we tab complete
 set wildmenu
 "set exrc
 "set paste
+
 
 "https://github.com/vim-airline/vim-airline/wiki/FAQ#there-is-a-pause-when-leaving-insert-mode
 set ttimeoutlen=10

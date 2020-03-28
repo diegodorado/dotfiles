@@ -8,10 +8,8 @@ rm -f $HOME/.zshrc
 ln -s $HOME/.dotfiles/zsh/rc $HOME/.zshrc
 rm -f $HOME/.gitconfig
 ln -s $HOME/.dotfiles/git/config $HOME/.gitconfig
-rm -f $HOME/.config/i3/config
-ln -s $HOME/.dotfiles/i3/config $HOME/.config/i3/config
-rm -f $HOME/.config/i3/status.toml
-ln -s $HOME/.dotfiles/i3/status.toml $HOME/.config/i3/status.toml
+rm -rf $HOME/.config/i3
+ln -s $HOME/.dotfiles/i3 $HOME/.config/i3
 rm -f $HOME/.XCompose
 ln -s $HOME/.dotfiles/X/XCompose $HOME/.XCompose
 rm -f $HOME/.Xmodmap
