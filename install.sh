@@ -4,6 +4,10 @@ echo -n "Symlinking dotfiles..."
 #Symlink .zshrc and .vimrc
 rm -f $HOME/.vimrc
 ln -s $HOME/.dotfiles/vim/rc $HOME/.vimrc
+rm -f $HOME/.bashrc
+ln -s $HOME/.dotfiles/bash/rc $HOME/.bashrc
+rm -f $HOME/.bash_profile
+ln -s $HOME/.dotfiles/bash/profile $HOME/.bash_profile
 rm -f $HOME/.zshrc
 ln -s $HOME/.dotfiles/zsh/rc $HOME/.zshrc
 rm -f $HOME/.gitconfig
