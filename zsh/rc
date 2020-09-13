@@ -204,3 +204,4 @@ precmd() { eval "$PROMPT_COMMAND" }
 
 
 export KEYTIMEOUT=1
+source /usr/share/nvm/init-nvm.sh

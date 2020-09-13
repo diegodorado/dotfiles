@@ -39,6 +39,10 @@ exec --no-startup-id nm-applet
 # set a background image
 exec --no-startup-id feh --bg-fill ~/Pictures/diego-alta-final.jpg
 
+# autohide mouse cursor when typing. shows again on mouse activity
+exec --no-startup-id sleep 2 & xbanish -d -i mod4 &
+bindsym $mod+shift+b exec xbanish -d -i mod4 &
+
 # auto configure displays
 exec --no-startup-id autorandr --change
 
@@ -94,6 +98,14 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# move workspace to monitor
+bindsym $mod+Control+Shift+h move workspace to output left
+bindsym $mod+Control+Shift+l move workspace to output right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Control+Shift+Left move  workspace to output move left
+bindsym $mod+Control+Shift+Right move  workspace to output move right
+
 # split in horizontal orientation
 bindsym $mod+z split h
 
@@ -119,16 +131,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
+set $ws1 "1:terms"
+set $ws2 "2:www"
+set $ws3 "3:vim"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws8 "8:non"
+set $ws9 "9:carla"
+set $ws10 "10:calf"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -207,7 +219,7 @@ bar {
         font pango:Inconsolata , FontAwesome 12.25
         status_command /home/diegodorado/Code/rust/i3status-rust/target/debug/i3status-rs ~/.config/i3/status.toml 
         colors {
-		background $bg-color
+        background $bg-color
 	    	separator #757575
 		#                  border             background         text
 		focused_workspace  $bg-color          $bg-color          $text-color
@@ -225,12 +237,15 @@ bar {
 
 
 # shutdown / restart / suspend...
-set $mode_system System (l)ock, (e)xit, (r)eboot, (s)hutdown
+set $OPTIMUS_SWITCH $HOME/.config/i3/optimus-switch.sh
+set $mode_system System (l)ock, (e)xit, (r)eboot, (s)hutdown (v)ideo card switch
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3lock --color 000000, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym v exec --no-startup-id "$OPTIMUS_SWITCH", mode "default"
+    
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -249,14 +264,27 @@ mode "$mode_display" {
 }
 bindsym $mod+shift+m mode "$mode_display"
 
-#exec --no-startup-id sleep 2 && xmodmap ~/.Xmodmap
-
 bindsym $mod+Shift+f exec termite -e ranger
 
+# start chrome
+exec --no-startup-id google-chrome-stable
+# binds chrome 
+bindsym $mod+Shift+g exec google-chrome-stable
+# move it to ws 2
+assign [class="Google-chrome"] $ws2
+
+# to get class, open xprop on a terminal and click the app you want
+assign [class="Non-Session-Manager"] $ws8
+assign [class="Non-Mixer"] $ws8
+assign [class="Carla2"] $ws9
+assign [class="calfjackhost"] $ws10
+assign [class="GLFW-Application"] $ws3
+
+
 # terminal scripts
-set $mode_terminal_scripts jack_transport_play jack_transport_stop toggle_compton
+set $mode_terminal_scripts toggle_compton
 mode "$mode_terminal_scripts" {
-    bindsym 3 exec "if [ $(pgrep -x 'picom') ]; then killall picom; else picom -b;fi"
+    bindsym 1 exec "if [ $(pgrep -x 'picom') ]; then killall picom; else picom -b;fi"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -265,12 +293,11 @@ bindsym $mod+t mode "$mode_terminal_scripts"
 
 
 # terminal apps
-set $mode_terminal_apps mocp(1) jack_capture(2) ranger(3) vim(4)
+set $mode_terminal_apps mocp(1) ranger(2) vim(3)
 mode "$mode_terminal_apps" {
     bindsym 1 exec termite -e mocp, mode "default"
-    bindsym 2 exec termite -e "echo 'stop' | jack_transport && jack_capture -jt", mode "default"
-    bindsym 3 exec termite -e "ranger ~", mode "default"
-    bindsym 4 exec termite -e vim, mode "default"
+    bindsym 2 exec termite -e "ranger ~", mode "default"
+    bindsym 3 exec termite -e vim, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -301,4 +328,4 @@ bindsym $mod+shift+bar  exec --no-startup-id "$JACK toggle_play", mode "default"
 bindsym $mod+shift+s exec "maim -s | xclip -selection clipboard -t image/png"
 bindsym $mod+shift+ctrl+s exec "maim -s ~/Pictures/screenshots/$(date +%s).png"
 # capslock as esc and right alt as compose key
-exec_always "setxkbmap -option compose:ralt -option caps:escape"
+# exec_always "setxkbmap -option compose:ralt -option caps:escape"

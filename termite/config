@@ -8,7 +8,8 @@ cursor          = #f8f8f2
 foreground      = #f8f8f2
 foreground_bold = #f8f8f2
 #background      = #272822
-background = rgba(0, 0, 0,0.50)
+#background = rgba(0, 0, 0,0.50)
+background = rgba(0, 0, 0,0)
 
 # black
 color0  = #272822

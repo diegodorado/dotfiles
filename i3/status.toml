@@ -10,6 +10,11 @@ name = "awesome"
 block = "jack"
 
 [[block]]
+block = "custom"
+command = ''' if [ "`optimus-manager --print-mode | grep nvidia`" ];  then echo 'NVIDIA'; else echo 'INTEL'; fi ''' 
+interval = 99999999
+
+[[block]]
 block = "disk_space"
 path = "/"
 alias = "/"
@@ -52,4 +57,4 @@ format = "%d/%m %R"
 
 [[block]]
 block = "bluetooth"
-mac = "60:C5:47:14:80:05"
+mac = "90:E2:02:BC:37:E6"
