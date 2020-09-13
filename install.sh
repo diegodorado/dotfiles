@@ -18,6 +18,7 @@ rm -f $HOME/.moc/config
 ln -s $HOME/.dotfiles/moc/config $HOME/.moc/config
 rm -f $HOME/.moc/keymap
 ln -s $HOME/.dotfiles/moc/keymap $HOME/.moc/keymap
+mkdir -p $HOME/.config/termite
 rm -f $HOME/.config/termite/config
 ln -s $HOME/.dotfiles/termite/config $HOME/.config/termite/config
 

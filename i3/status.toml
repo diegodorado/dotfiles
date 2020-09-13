@@ -44,17 +44,17 @@ block = "custom"
 command = '''echo  $(ip route | grep '^[0-9]' | sed -E 's/.*src\s([0-9\.]*).*/\1/' ) : $(curl ipinfo.io/ip)''' 
 interval = 120
 
-[[block]]
-block = "battery"
-interval = 10
-format = "{percentage}%"
-driver = "upower"
+#[[block]]
+#block = "battery"
+#interval = 10
+#format = "{percentage}%"
+#driver = "upower"
 
 [[block]]
 block = "time"
 interval = 60
 format = "%d/%m %R"
 
-[[block]]
-block = "bluetooth"
-mac = "90:E2:02:BC:37:E6"
+#[[block]]
+#block = "bluetooth"
+#mac = "90:E2:02:BC:37:E6"
