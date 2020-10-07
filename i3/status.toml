@@ -55,6 +55,6 @@ block = "time"
 interval = 60
 format = "%d/%m %R"
 
-#[[block]]
-#block = "bluetooth"
-#mac = "90:E2:02:BC:37:E6"
+[[block]]
+block = "bluetooth"
+mac = "90:E2:02:BC:37:E6"

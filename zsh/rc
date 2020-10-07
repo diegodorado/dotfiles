@@ -206,3 +206,4 @@ precmd() { eval "$PROMPT_COMMAND" }
 export KEYTIMEOUT=1
 source /usr/share/nvm/init-nvm.sh
 [ -f "/home/diegodorado/.ghcup/env" ] && source "/home/diegodorado/.ghcup/env" # ghcup-env
+

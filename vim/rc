@@ -45,31 +45,46 @@ set expandtab
 "nnoremap p p=`]<C-o>
 "nnoremap P P=`]<C-o>
 
+
 call plug#begin('~/.vim/plugged')
-  Plug 'tidalcycles/vim-tidal'
-  Plug 'supercollider/scvim'
+  " common
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'ctrlpvim/ctrlp.vim'
+  " substitutions
+  Plug 'svermeulen/vim-subversive'
+  " async run programs
+  "Plug 'benekastah/neomake'
+  " platformio
+  "Plug 'coddingtonbear/neomake-platformio'
+  " livecoding
+  Plug 'tidalcycles/vim-tidal'
+  Plug 'supercollider/scvim'
   " Visuals
   Plug 'netsgnut/arctheme.vim'
   Plug 'vim-airline/vim-airline'
-  Plug 'tpope/vim-fugitive'
-
   " run commands on quickfix window
   Plug 'skywind3000/asyncrun.vim'
-
+  " syntax
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'andys8/vim-elm-syntax'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'tikhomirov/vim-glsl'
 call plug#end()
 
+" open compilation list after neomake
+let g:neomake_open_list = 2
+
 " open quickfix window automatically when AsyncRun is executed
-" set the quickfix window 6 lines height.
-let g:asyncrun_open = 6
+" set the quickfix window 8 lines height.
+let g:asyncrun_open = 8
 " F10 to toggle quickfix window
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap <F10> :call asyncrun#quickfix_toggle(8)<cr>
+nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
 
 " Display all matching files when we tab complete
 set wildmenu
@@ -211,3 +226,12 @@ xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
+
+" subversive substitutions bindings
+" s for substitute
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
+nmap <leader>s <plug>(SubversiveSubstituteRange)
+xmap <leader>s <plug>(SubversiveSubstituteRange)
+nmap <leader>ss <plug>(SubversiveSubstituteWordRange)

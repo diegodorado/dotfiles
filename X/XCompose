@@ -1,9 +1,0 @@
-include "%L"
-
-<Multi_key> <n> : "ñ"
-<Multi_key> <a> : "á"
-<Multi_key> <e> : "é"
-<Multi_key> <i> : "í"
-<Multi_key> <o> : "ó"
-<Multi_key> <u> : "ú"
-<Multi_key> <Multi_key> <k> <i> <s> <s>	    : "💋"    U1F48B # KISS MARK

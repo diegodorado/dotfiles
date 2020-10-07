@@ -14,10 +14,6 @@ rm -f $HOME/.gitconfig
 ln -s $HOME/.dotfiles/git/config $HOME/.gitconfig
 rm -rf $HOME/.config/i3
 ln -s $HOME/.dotfiles/i3 $HOME/.config/i3
-rm -f $HOME/.XCompose
-ln -s $HOME/.dotfiles/X/XCompose $HOME/.XCompose
-rm -f $HOME/.Xmodmap
-ln -s $HOME/.dotfiles/X/Xmodmap $HOME/.Xmodmap
 rm -f $HOME/.moc/config
 ln -s $HOME/.dotfiles/moc/config $HOME/.moc/config
 rm -f $HOME/.moc/keymap
@@ -27,7 +23,9 @@ rm -f $HOME/.config/termite/config
 ln -s $HOME/.dotfiles/termite/config $HOME/.config/termite/config
 
 # Install Plug
-#curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# yay vim-plug
 #vim +PlugInstall +q
+
+#todo: set keymap here
 
 echo "Done installing! "
