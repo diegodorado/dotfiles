@@ -7,7 +7,7 @@ name = "awesome"
 
 
 [[block]]
-block = "jack"
+block = "sound"
 
 [[block]]
 block = "custom"
@@ -16,19 +16,15 @@ interval = 99999999
 
 [[block]]
 block = "disk_space"
-path = "/"
-alias = "/"
 info_type = "available"
 unit = "GB"
 interval = 20
-warning = 20.0
-alert = 10.0
+format = "{icon} {available} {unit}"
 
 [[block]]
 block = "memory"
 display_type = "memory"
-format_mem = "{Mup}%"
-format_swap = "{SUp}%"
+format_mem = "{Mupi}%"
 
 [[block]]
 block = "cpu"
@@ -44,12 +40,6 @@ block = "custom"
 command = '''echo  $(ip route | grep '^[0-9]' | sed -E 's/.*src\s([0-9\.]*).*/\1/' ) : $(curl ipinfo.io/ip)''' 
 interval = 120
 
-#[[block]]
-#block = "battery"
-#interval = 10
-#format = "{percentage}%"
-#driver = "upower"
-
 [[block]]
 block = "time"
 interval = 60
@@ -58,3 +48,11 @@ format = "%d/%m %R"
 [[block]]
 block = "bluetooth"
 mac = "90:E2:02:BC:37:E6"
+
+[[block]]
+block = "battery"
+#format = "{percentage}% {time}"
+format = "{percentage}%"
+driver = "upower"
+device = "BAT1"
+

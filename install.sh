@@ -21,6 +21,9 @@ ln -s $HOME/.dotfiles/moc/keymap $HOME/.moc/keymap
 mkdir -p $HOME/.config/termite
 rm -f $HOME/.config/termite/config
 ln -s $HOME/.dotfiles/termite/config $HOME/.config/termite/config
+mkdir -p $HOME/.config/dunst
+rm -f $HOME/.config/dunst/dunstrc
+ln -s $HOME/.dotfiles/dunst/rc $HOME/.config/dunst/dunstrc
 
 # Install Plug
 # yay vim-plug

@@ -192,7 +192,7 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
 esac
 
 
-export PATH=~/.yarn/bin:~/.ghcup/bin:~/.gem/ruby/2.7.0/bin:$PATH
+export PATH=~/bin:~/.yarn/bin:~/.ghcup/bin:$PATH
 
 # Commands to be executed before the prompt is displayed
 # Save current working dir
@@ -207,3 +207,7 @@ export KEYTIMEOUT=1
 source /usr/share/nvm/init-nvm.sh
 [ -f "/home/diegodorado/.ghcup/env" ] && source "/home/diegodorado/.ghcup/env" # ghcup-env
 
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/diegodorado/Code/node/geriatrico/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/diegodorado/Code/node/geriatrico/node_modules/tabtab/.completions/electron-forge.zsh

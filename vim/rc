@@ -34,7 +34,7 @@ set nowb
 
 " ================ Indentation ======================
 set autoindent
-set smartindent
+set nosmartindent " gives me troubles with tidal files
 set smarttab
 set shiftwidth=2
 set softtabstop=2
@@ -63,6 +63,7 @@ call plug#begin('~/.vim/plugged')
   "Plug 'coddingtonbear/neomake-platformio'
   " livecoding
   Plug 'tidalcycles/vim-tidal'
+  Plug 'itchyny/vim-haskell-indent'
   Plug 'supercollider/scvim'
   " Visuals
   Plug 'netsgnut/arctheme.vim'
@@ -74,6 +75,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'andys8/vim-elm-syntax'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'tikhomirov/vim-glsl'
+
+  Plug 'christoomey/vim-system-copy'
+
 call plug#end()
 
 " open compilation list after neomake
@@ -94,7 +98,11 @@ set secure
 
 "tidal vim defaults
 let g:tidal_default_config = {"socket_name": "default", "target_pane": "tidal:0.0"}
+" hush binding on INSERT mode
+" mmm, confilct with move hjkl ...imap <buffer> <c-h> <Esc>:TidalHush<Esc>i<Right>
 
+" vim-tidal bindings for scvim
+au Filetype supercollider nmap <buffer> <c-e> :call SClang_block()<CR>
 
 "https://github.com/vim-airline/vim-airline/wiki/FAQ#there-is-a-pause-when-leaving-insert-mode
 set ttimeoutlen=10
