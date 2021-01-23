@@ -24,6 +24,11 @@ ln -s $HOME/.dotfiles/termite/config $HOME/.config/termite/config
 mkdir -p $HOME/.config/dunst
 rm -f $HOME/.config/dunst/dunstrc
 ln -s $HOME/.dotfiles/dunst/rc $HOME/.config/dunst/dunstrc
+mkdir -p $HOME/.config/rofi
+rm -f $HOME/.config/rofi/diegodorado.rasi
+rm -f $HOME/.config/rofi/config.rasi
+ln -s $HOME/.dotfiles/rofi/diegodorado.rasi $HOME/.config/rofi/diegodorado.rasi
+ln -s $HOME/.dotfiles/rofi/config.rasi $HOME/.config/rofi/config.rasi
 
 # Install Plug
 # yay vim-plug

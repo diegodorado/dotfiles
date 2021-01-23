@@ -1,0 +1,7 @@
+configuration {
+ modi: "drun,run,ssh";
+ theme: "diegodorado";
+ font: "Inconsolata 14";
+ terminal: "i3-sensible-terminal";
+ display-drun: "";
+}
