@@ -4,4 +4,6 @@ configuration {
  font: "Inconsolata 14";
  terminal: "i3-sensible-terminal";
  display-drun: "";
+ ssh-command: "{terminal} --hold -e ' {ssh-client} {host} [-p {port}] ' ";
+ run-shell-command: "{terminal} --hold -e '{cmd}'";
 }
